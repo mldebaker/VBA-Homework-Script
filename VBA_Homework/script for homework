@@ -1,0 +1,57 @@
+Sub Homework():
+  'Define All Variabes
+  Dim Ticker As String
+  Dim Yr_Change As Double
+  Dim Per_Change As Double
+  Dim Total As Double
+'Assign All Variables
+Summary = 2
+Total = 0
+'Assign Column Titles
+Cells(1, 9).Value = "Ticker"
+Cells(1, 10).Value = "Yearly Change"
+Cells(1, 11).Value = "Percent Change"
+Cells(1, 12).Value = "Total Stock Volume"
+'Format Column Titles
+Cells(1, 9).Font.Bold = True
+Cells(1, 10).Font.Bold = True
+Cells(1, 11).Font.Bold = True
+Cells(1, 12).Font.Bold = True
+'Define First Row
+FirstRow = Cells(Summary, 3).Value
+'Make for loop
+For i = 2 To 70926
+  'Define If Statement
+  If Cells(i + 1, 1).Value <> Cells(i, 1).Value Then
+      'Setup Ticker
+      Ticker = Cells(i, 1).Value
+      'Set LastRow
+      LastRow = Cells(i, 6).Value
+      'Set Year_Change
+      Yr_Change = FirstRow - LastRow
+      Per_Change = (Yr_Change / FirstRow)
+      FirstRow = Cells(i + 1, 3).Value
+      'Print Year Change
+      Cells(Summary, 10).Value = Yr_Change
+      'Print Per Change
+      Cells(Summary, 11).Value = Per_Change
+      'Print Ticker to Summary Table
+      Cells(Summary, 9).Value = Ticker
+      'Print Total to Summary Table
+      Cells(Summary, 12).Value = Total
+      'Color formatting
+      If Cells(Summary, 10).Value >= 0 Then
+           Cells(Summary, 10).Interior.ColorIndex = 4
+      ElseIf Cells(Summary, 10).Value < 0 Then
+           Cells(Summary, 10).Interior.ColorIndex = 3
+      End If
+      'Add One to Summary Table Row
+      Summary = Summary + 1
+      'Reset the Total
+      Total = 0
+   'Set Total
+   Else: Total = Total + Cells(i, 7).Value
+   End If
+
+ Next i
+End Sub
